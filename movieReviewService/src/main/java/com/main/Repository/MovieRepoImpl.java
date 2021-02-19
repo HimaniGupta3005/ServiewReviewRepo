@@ -31,7 +31,7 @@ public class MovieRepoImpl implements MovieRepo {
     public Movie getMovieByName(String movie) {
         
         for(Movie m : movieList) {
-            if(m.getMovieName().equals(movie))
+            if(m.getMovieName().equalsIgnoreCase(movie))
                 return m;
 
         }

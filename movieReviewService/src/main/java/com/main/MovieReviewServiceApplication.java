@@ -1,5 +1,6 @@
 package com.main;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -7,6 +8,7 @@ import javax.lang.model.util.ElementScanner6;
 
 import com.main.dto.Movie;
 import com.main.dto.User;
+import com.main.exceptions.InvalidScoreException;
 import com.main.exceptions.MovieNotExistException;
 import com.main.exceptions.MovieNotReleasedException;
 import com.main.exceptions.UserAlreadyAddedReviewForMovieException;
@@ -28,29 +30,44 @@ public class MovieReviewServiceApplication {
             System.out.println("2. Add new movie");
             System.out.println("3. Give review of a movie");
             System.out.println("4. Get all Users");
-            System.out.println("5. Get annual score for a movie");
+            System.out.println("5. Get average score for a movie");
             System.out.println("6. check all review made by user");
-            System.out.println("7. exit");
+            System.out.println("7. Get avaerage score for a movie in a particular year");
+            System.out.println("8. exit");
 
             n = sn.nextInt();
-
+            sn.nextLine();
             switch (n) {
 
                 case 1:
                     System.out.println("Enter User name");
-                    String name = sn.next();
+                    String name = sn.nextLine();
+                    
                     service.addUser(name);
                     break;
 
                 case 2:
                     System.out.println("Enter Movie name");
-                    String mname = sn.next();
+                    String mname = sn.nextLine();
                     System.out.println("Enter release year");
                     int year = sn.nextInt();
+                    System.out.println("Enter number of genres movie have");
+                    int count = sn.nextInt();
+                    sn.nextLine();
+                    
+
                     System.out.println("Enter genre");
-                    String genre = sn.next();
+                    String genre = sn.nextLine();
+
+                    List<String> genreList = new ArrayList<String>();
+                    genreList.add(genre);
+                    for(int i=2;i<=count;i++) {
+                        System.out.println("Enter next genre");
+                        genre = sn.nextLine();
+                        genreList.add(genre);
+                    }
                     try {
-                        service.addMovie(mname, year, genre);
+                        service.addMovie(mname, year, genreList);
                     } catch (WrongYearException e) {
                         System.out.println(e + " Movie not added");
                         //System.exit(0);
@@ -59,13 +76,12 @@ public class MovieReviewServiceApplication {
 
                 case 3:
                     System.out.println("Enter Movie Name");
-                    String m = sn.next();
+                    String m = sn.nextLine();
                     System.out.println("Enter User Name");
-                    String uname = sn.next();
+                    String uname = sn.nextLine();
                     System.out.println("Enter score");
                     int score = sn.nextInt();
-
-                    
+                    sn.nextLine();
                     try {
                         service.giveReview(uname, m, score);
                     } catch (UserAlreadyAddedReviewForMovieException e2) {
@@ -75,6 +91,8 @@ public class MovieReviewServiceApplication {
                     } catch (UserNotExistException e2) {
                         System.out.println(e2);
                     } catch (MovieNotExistException e2) {
+                        System.out.println(e2);
+                    } catch(InvalidScoreException e2) {
                         System.out.println(e2);
                     }
                     
@@ -93,7 +111,7 @@ public class MovieReviewServiceApplication {
                     break;
                 case 5 :
                     System.out.println("Enter movie name");
-                    String mn = sn.next();
+                    String mn = sn.nextLine();
                     try {
                         System.out.println(service.getScore(mn));
                     } catch (MovieNotExistException e1) {
@@ -103,9 +121,9 @@ public class MovieReviewServiceApplication {
                     break;
                 case 6 :
                     System.out.println("Enter usr name ");
-                    String nmm = sn.next();
-                    System.out.println("Enter gerne");
-                    String st = sn.next();
+                    String nmm = sn.nextLine();
+                    System.out.println("Enter genre");
+                    String st = sn.nextLine();
                     List<Movie> movieList;
                     try {
                         movieList = service.getMovieByGenre(st, nmm);
@@ -116,7 +134,7 @@ public class MovieReviewServiceApplication {
                             }
                         }
                         else {
-                            System.out.println("No movie reviewed");
+                            System.out.println("No movie reviewed by "+nmm+" of genre "+st);
                         }
                     } catch (UserNotExistException e) {
                         System.out.println(e);
@@ -126,11 +144,24 @@ public class MovieReviewServiceApplication {
                     
                     break;
                 
+                case 7 :
+                    System.out.println("Enter Movie name ");
+                    String movie1 = sn.nextLine();
+                    System.out.println("Enter year");
+                    int year1 = sn.nextInt();
+                    sn.nextLine();
 
+                    System.out.println(service.getMovieScoreByYear(movie1,year1));
+                    
+                    break;
+
+                default :
+                    if(n != 8)
+                        System.out.println(n+" is not valid options. Please enter no. between 1-8");
             }
 
 
-        }while(n != 7);
+        }while(n != 8);
         
         System.out.println("Thanks");
 

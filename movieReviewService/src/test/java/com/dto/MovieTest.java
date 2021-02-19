@@ -4,6 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.main.dto.Movie;
 import com.main.exceptions.WrongYearException;
 
@@ -13,24 +16,7 @@ import org.junit.Test;
 public class MovieTest {
 
     
-    private Movie movieTmp;
-
-    @Before
-    public void beforeAll() {
-
-        int year = 2006;
-        String movieName = "padamavat";
-        String genre = "comedy";
-        Movie movieTmp;
-
-        try {
-            movieTmp = new Movie(movieName, year, genre);
-        } catch (WrongYearException e) {
-            movieTmp = null;
-        }
-
-    }
-
+    
     @Test
     public void createMovieObjectWithCorrectYearTest() {
 
@@ -38,16 +24,21 @@ public class MovieTest {
         String movieName = "padamavat";
         String genre = "comedy";
         Movie movie;
+        List<String> list = new ArrayList<String>();
+        list.add(genre);
+        list.add("action");
+
 
         try {
-            movie = new Movie(movieName, year, genre);
+            movie = new Movie(movieName, year, list);
         } catch (WrongYearException e) {
             movie = null;
         }
 
         assertNotEquals("Movie object not created",movie, null);
 
-        assertEquals(movie.getGenre(), genre);
+        assertEquals(movie.getGenre().get(0), genre.toUpperCase());
+        assertEquals(movie.getGenre().get(1), "ACTION");
         assertEquals(movie.getMovieName(),movieName);
         assertEquals(movie.getRelease(), year);
         assertEquals(movie.getAverageScore(year), 0);
@@ -62,9 +53,11 @@ public class MovieTest {
         String movieName = "padamavat";
         String genre = "comedy";
         Movie movie;
+        List<String> list = new ArrayList<String>();
+        list.add(genre);
 
         try {
-            movie = new Movie(movieName, year, genre);
+            movie = new Movie(movieName, year, list);
         } catch (WrongYearException e) {
             movie = null;
         }
@@ -72,9 +65,9 @@ public class MovieTest {
         assertEquals("Movie object should not be created",movie, null);
 
         year = 65981;
-
+        
         try {
-            movie = new Movie(movieName, year, genre);
+            movie = new Movie(movieName, year, list);
         } catch (WrongYearException e) {
             movie = null;
         }
@@ -90,9 +83,11 @@ public class MovieTest {
         String movieName = "padamavat";
         String genre = "comedy";
         Movie movie;
+        List<String> list = new ArrayList<String>();
+        list.add(genre);
 
         try {
-            movie = new Movie(movieName, year, genre);
+            movie = new Movie(movieName, year, list);
         } catch (WrongYearException e) {
             movie = null;
         }
@@ -118,9 +113,11 @@ public class MovieTest {
         String movieName = "padamavat";
         String genre = "comedy";
         Movie movie;
+        List<String> list = new ArrayList<String>();
+        list.add(genre);
 
         try {
-            movie = new Movie(movieName, year, genre);
+            movie = new Movie(movieName, year, list);
         } catch (WrongYearException e) {
             movie = null;
         }
@@ -136,9 +133,10 @@ public class MovieTest {
         String movieName = "padamavat";
         String genre = "comedy";
         Movie movie;
-
+        List<String> list = new ArrayList<String>();
+        list.add(genre);
         try {
-            movie = new Movie(movieName, year, genre);
+            movie = new Movie(movieName, year,list);
         } catch (WrongYearException e) {
             movie = null;
         }

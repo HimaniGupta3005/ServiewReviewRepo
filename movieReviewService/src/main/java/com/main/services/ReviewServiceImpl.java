@@ -10,6 +10,7 @@ import com.main.Repository.ReviewRepoImpl;
 import com.main.dto.Movie;
 import com.main.dto.Review;
 import com.main.dto.User;
+import com.main.exceptions.InvalidScoreException;
 import com.main.exceptions.MovieNotExistException;
 
 public class ReviewServiceImpl implements ReviewService {
@@ -24,14 +25,16 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Review addReview(User user, Movie movie, int score)
-            throws UserAlreadyAddedReviewForMovieException, MovieNotReleasedException {
+            throws UserAlreadyAddedReviewForMovieException, MovieNotReleasedException, InvalidScoreException {
 
+        if(score >= 1 && score <= 10) {
+            
+            Review review = new Review(user, movie, score);
+            review = reviewRepo.addReview(review);
+            return review;
+        }
+        throw new InvalidScoreException();
         
-        Review review = new Review(user, movie, score);
-        
-        review = reviewRepo.addReview(review);
-
-        return review;
     }
 
     @Override

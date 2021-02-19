@@ -3,6 +3,8 @@ package com.dto;
 import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.main.dto.Movie;
 import com.main.dto.Review;
@@ -18,8 +20,10 @@ public class ReviewTest {
 
         User user = new User("SRK");
         Movie movie ;
+        List<String> list = new ArrayList<String>();
+        list.add("comedy");
         try {
-            movie = new Movie("Padamavat", 2001, "comedy");
+            movie = new Movie("Padamavat", 2001, list);
         } catch (WrongYearException e) {
             movie = null;
         }

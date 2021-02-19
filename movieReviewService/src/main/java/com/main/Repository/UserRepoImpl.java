@@ -47,7 +47,7 @@ public class UserRepoImpl implements UserRepo {
     public User getUserByName(String name){
 
         for(User u : userList) {
-            if(u.getName().equals(name)) 
+            if(u.getName().equalsIgnoreCase(name)) 
                 return u;
         }
 

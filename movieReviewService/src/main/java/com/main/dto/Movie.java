@@ -10,18 +10,22 @@ public class Movie {
 
     private String movieName;
     private int release;
-    private String genre;
+    private List<String> genre;
     public int totalReview;
     private Map<Integer, Integer> scoreMap;
     private Map<Integer, Integer> yearMap;
 
-    public Movie(String movieName2, int year, String genre2) throws WrongYearException {
+    public Movie(String movieName2, int year, List<String> genre2) throws WrongYearException {
 
         this.movieName = movieName2;
         if (year < 1500 || year > 9999)
             throw new WrongYearException();
         this.release = year;
-        this.genre = genre2;
+        genre = new ArrayList<String>();
+        for(String s:genre2) {
+            genre.add(s.toUpperCase());
+        }
+    
         this.totalReview = 0;
         scoreMap = new HashMap<Integer, Integer>();
         yearMap = new HashMap<Integer, Integer>();
@@ -43,12 +47,16 @@ public class Movie {
         this.release = release;
     }
 
-    public String getGenre() {
+    public List<String> getGenre() {
         return genre;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setGenre(List<String> genre) {
+
+        for(String s:genre) {
+            genre.add(s.toUpperCase());
+        }
+        
     }
 
     public void setScore(int year, int totalScore) {

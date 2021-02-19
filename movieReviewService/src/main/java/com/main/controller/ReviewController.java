@@ -5,6 +5,7 @@ import java.util.List;
 import com.main.Repository.UserRepo;
 import com.main.dto.Movie;
 import com.main.dto.User;
+import com.main.exceptions.InvalidScoreException;
 import com.main.exceptions.MovieNotExistException;
 import com.main.exceptions.MovieNotReleasedException;
 import com.main.exceptions.UserAlreadyAddedReviewForMovieException;
@@ -25,7 +26,6 @@ public class ReviewController {
     private ReviewServiceFactory reviewServiceFactory;
     private MovieService movieService;
     private MovieServiceFactory movieServiceFactory;
-    
 
     public ReviewController() {
         userServiceFactory = new UserServiceFactory();
@@ -43,7 +43,8 @@ public class ReviewController {
     public List<User> getAllUser() {
         return userService.allUser();
     }
-    public Movie addMovie(String name, int release, String genre) throws WrongYearException {
+
+    public Movie addMovie(String name, int release, List<String> genre) throws WrongYearException {
         Movie movie = new Movie(name, release, genre);
 
         return movieService.addMovie(name, release, genre);
@@ -51,7 +52,7 @@ public class ReviewController {
 
     public void giveReview(String userName, String movieName, int points)
             throws UserAlreadyAddedReviewForMovieException, MovieNotReleasedException, UserNotExistException,
-            MovieNotExistException {
+            MovieNotExistException, InvalidScoreException {
         
         User user = userService.getUserByUserName(userName);
         Movie movie = movieService.getMovieByName(movieName);
@@ -93,6 +94,14 @@ public class ReviewController {
         
         return movieService.getScore(movie);
 
+
+    }
+
+    public int getMovieScoreByYear(String movieName,int year) {
+
+        Movie movie = movieService.getMovieByName(movieName);
+
+        return movie.getAverageScore(year);
 
     }
     

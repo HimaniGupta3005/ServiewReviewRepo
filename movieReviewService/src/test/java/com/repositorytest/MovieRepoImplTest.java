@@ -2,6 +2,9 @@ package com.repositorytest;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.main.Repository.MovieRepo;
 import com.main.Repository.MovieRepoImpl;
 import com.main.dto.Movie;
@@ -21,9 +24,11 @@ public class MovieRepoImplTest {
         String movieName = "padamavat";
         String genre = "comedy";
         Movie movie;
+        List<String> list = new ArrayList<String>();
+        list.add(genre);
 
         try {
-            movie = new Movie(movieName, year, genre);
+            movie = new Movie(movieName, year, list);
         } catch (WrongYearException e) {
             movie = null;
         }

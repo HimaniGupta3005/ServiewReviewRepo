@@ -3,6 +3,9 @@ package com.repositorytest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.main.Repository.ReviewRepo;
 import com.main.Repository.ReviewRepoImpl;
 import com.main.dto.Movie;
@@ -26,9 +29,11 @@ public class ReviewRepoImplTest {
 
         User user = new User("srk");
         Movie movie;
+        List<String> list = new ArrayList<String>();
+        list.add("comedy");
 
         try {
-            movie = new Movie("padamavat", 2006, "comedy");
+            movie = new Movie("padamavat", 2006, list);
         } catch (Exception e) {
             System.out.println(e);
             movie = null;
@@ -54,9 +59,10 @@ public class ReviewRepoImplTest {
 
         User user = new User("srk");
         Movie movie;
-
+        List<String> list = new ArrayList<String>();
+        list.add("comedy");
         try {
-            movie = new Movie("padamavat", 2106, "comedy");
+            movie = new Movie("padamavat", 2106, list);
         } catch (Exception e) {
             System.out.println(e);
             movie = null;
@@ -81,9 +87,11 @@ public class ReviewRepoImplTest {
 
         User user = new User("srk");
         Movie movie;
+        List<String> list = new ArrayList<String>();
+        list.add("comedy");
 
         try {
-            movie = new Movie("padamavat", 2006, "comedy");
+            movie = new Movie("padamavat", 2006, list);
         } catch (Exception e) {
             System.out.println(e);
             movie = null;
@@ -116,9 +124,10 @@ public class ReviewRepoImplTest {
 
         User user = new User("srk");
         Movie movie;
-
+        List<String> list = new ArrayList<String>();
+        list.add("comedy");
         try {
-            movie = new Movie("padamavat", 2006, "comedy");
+            movie = new Movie("padamavat", 2006, list);
         } catch (Exception e) {
             System.out.println(e);
             movie = null;
@@ -137,7 +146,7 @@ public class ReviewRepoImplTest {
         Movie movie1;
 
         try {
-            movie1 = new Movie("lunchbox", 2007, "comedy");
+            movie1 = new Movie("lunchbox", 2007, list);
         } catch (Exception e) {
             System.out.println(e);
             movie1 = null;

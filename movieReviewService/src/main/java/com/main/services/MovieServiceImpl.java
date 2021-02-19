@@ -23,7 +23,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie addMovie(String movieName, int year, String genre) throws WrongYearException {
+    public Movie addMovie(String movieName, int year, List<String> genre) throws WrongYearException {
         
         Movie movie = new Movie(movieName,year,genre);
         movie = movieRepo.addMovie(movie);

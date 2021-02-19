@@ -13,14 +13,20 @@ import com.main.dto.Review;
 import com.main.dto.User;
 import com.main.exceptions.MovieNotReleasedException;
 import com.main.exceptions.UserAlreadyAddedReviewForMovieException;
+import com.main.factories.UserRepoFactory;
 import com.main.services.ReviewService;
 
 public class ReviewRepoImpl implements ReviewRepo {
 
     private List<Review> reviewList;
+    private UserRepo userRepo;
+    private UserRepoFactory factory;
 
     public ReviewRepoImpl() {
         reviewList = new ArrayList<Review>();
+        factory = new UserRepoFactory();
+        userRepo = factory.getUserRepo();
+
     }
 
     @Override
@@ -45,7 +51,7 @@ public class ReviewRepoImpl implements ReviewRepo {
             }
         }
         
-        if(user.getTitle() == "Viewer") {
+        if(user.getTitle().equalsIgnoreCase("Viewer")) {
             int tmp2 = review.getPoints();
             movie.setScore(review.getYear(),tmp2);
         } else {
@@ -54,7 +60,8 @@ public class ReviewRepoImpl implements ReviewRepo {
         }
             
         if (count == 2) {
-            user.setTitle("Critic");
+            userRepo.updateTitleToCritic(user);
+            System.out.println(user.getName()+" has become Critic now!!");
             user.setYear(LocalDate.now().getYear());
         }
 
@@ -68,7 +75,7 @@ public class ReviewRepoImpl implements ReviewRepo {
         List<Movie> movieList = new ArrayList<Movie>();
 
         for(Review r : reviewList) {
-            if(r.getUser() == user && r.getMovie().getGenre().equals(genre))
+            if(r.getUser() == user && r.getMovie().getGenre().contains(genre.toUpperCase()))
             movieList.add(r.getMovie());
         }
 
